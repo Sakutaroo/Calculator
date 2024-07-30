@@ -22,6 +22,6 @@ static const op_t op_map[] = {
     {.symbol = '\0', .operation = ERROR}
 };
 
-operation_t operation_from_symbol(char);
+operation_t operation_from_symbol(const char symbol);
 
 #endif /* OPERATION_H */

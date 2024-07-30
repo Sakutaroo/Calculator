@@ -8,12 +8,13 @@ int create_head(list_t **head)
     *head = malloc(sizeof(list_t));
     if (*head == NULL)
         return 84;
+    (*head)->expression_part = NULL;
     (*head)->next = *head;
     (*head)->prev = *head;
     return 0;
 }
 
-int create_node_back(list_t **head, int nb)
+int create_node_back(list_t **head, expression_part_t *expression_part)
 {
     list_t *node = NULL;
 
@@ -22,7 +23,7 @@ int create_node_back(list_t **head, int nb)
     node = malloc(sizeof(list_t));
     if (node == NULL)
         return 84;
-    node->number = nb;
+    node->expression_part = expression_part;
     node->next = *head;
     node->prev = (*head)->prev;
     (*head)->prev->next = node;
@@ -41,6 +42,7 @@ int delete_node_back(list_t **head)
         return 84;
     (*head)->prev = node->prev;
     node->prev->next = *head;
+    delete_expression_part(&node->expression_part);
     free(node);
     node = NULL;
     return 0;
@@ -57,6 +59,7 @@ int delete_node_front(list_t **head)
         return 84;
     (*head)->next = node->next;
     node->next->prev = *head;
+    delete_expression_part(&node->expression_part);
     free(node);
     node = NULL;
     return 0;

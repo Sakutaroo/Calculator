@@ -4,13 +4,12 @@
 #include "operation.h"
 #include "expression.h"
 #include "list.h"
+#include "calculator.h"
 
-int main(const int argc, const char **argv)
+int main(const int argc, char **argv)
 {
     // if (argc != 2 || argv == NULL || *argv == NULL || argv[1] == NULL)
     //     return 1;
-    list_t *list = NULL;
-    create_head(&list);
-    create_node_back(&list, )
+
     return 0;
 }

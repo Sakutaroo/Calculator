@@ -13,5 +13,7 @@ typedef struct expression_part_s {
     parentheses_t *parentheses;
 } expression_part_t;
 
+int delete_expression_part(expression_part_t **expression_part);
+int init_expression_part(expression_part_t **expression_part);
 
 #endif /* EXPRESSION_PART_H */
