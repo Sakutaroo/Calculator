@@ -11,6 +11,9 @@ int main(const int argc, char **argv)
         return 1;
     list = parse(argv[1]);
     display_list(list);
+    printf("--------\n");
+    double result = evaluate(list);
+    printf("Result = %f", result);
     delete_list(list);
     return 0;
 }
