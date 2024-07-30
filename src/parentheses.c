@@ -13,5 +13,5 @@ parentheses_t parentheses_from_symbol(const char c)
         return OPENING;
     if (c == ')')
         return CLOSING;
-    return ERROR;
+    return ERROR_PAR;
 }

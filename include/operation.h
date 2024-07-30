@@ -3,7 +3,7 @@
     #include <stdbool.h>
 
 typedef enum operation_e {
-    ERROR,
+    ERROR_OP,
     ADD,
     SUBTRACT,
     MULTIPLY,
@@ -20,7 +20,7 @@ static const op_t op_map[] = {
     {.symbol = '-', .operation = SUBTRACT},
     {.symbol = 'x', .operation = MULTIPLY},
     {.symbol = '/', .operation = DIVIDE},
-    {.symbol = '\0', .operation = ERROR}
+    {.symbol = '\0', .operation = ERROR_OP}
 };
 
 operation_t operation_from_symbol(const char symbol);

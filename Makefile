@@ -6,7 +6,8 @@ SRC	=	src/main.c	\
 		src/expression/part.c	\
 		src/utils/list.c	\
 		src/utils/delete_char.c	\
-		src/utils/is_digit.c
+		src/utils/is_digit.c	\
+		src/utils/strtod.c
 
 NAME	=	calculator
 

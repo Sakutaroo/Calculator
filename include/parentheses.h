@@ -3,7 +3,7 @@
     #include <stdbool.h>
 
 typedef enum parentheses_s {
-    ERROR,
+    ERROR_PAR,
     OPENING,
     CLOSING
 } parentheses_t;
