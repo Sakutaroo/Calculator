@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "list.h"
 
+#include <stdio.h>
+
 int create_head(list_t **head)
 {
     if (head == NULL || *head != NULL)
@@ -77,5 +79,20 @@ int delete_list(list_t *head)
         delete_node_back(&head);
     free(head);
     head = NULL;
+    return 0;
+}
+
+int display_list(const list_t *head)
+{
+    if (head == NULL)
+        return 84;
+    for (const list_t *temp = head->next; head != temp; temp = temp->next) {
+        if (temp->expression_part->operation != NULL)
+            printf("Operation = %d\n", *temp->expression_part->operation);
+        else if (temp->expression_part->parentheses != NULL)
+            printf("Parentheses = %d\n", *temp->expression_part->parentheses);
+        else
+            printf("Number = %f\n", temp->expression_part->number);
+    }
     return 0;
 }

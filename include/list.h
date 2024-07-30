@@ -13,5 +13,6 @@ int create_node_back(list_t **head, expression_part_t *expression_part);
 int delete_node_back(list_t **head);
 int delete_node_front(list_t **head);
 int delete_list(list_t *head);
+int display_list(const list_t *head);
 
 #endif /* LIST_H */
