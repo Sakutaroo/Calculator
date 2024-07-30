@@ -21,7 +21,7 @@ static void parse_char(const char *calculation, list_t **result, int *index)
         init_expression_part_operation(&expression_part, operation_from_symbol(calculation[*index]));
         create_node_back(result, expression_part);
     } else if (is_digit(calculation[*index])) {
-        double number = parse_number(calculation, index);
+        const double number = parse_number(calculation, index);
         init_expression_part_number(&expression_part, number);
         create_node_back(result, expression_part);
     } else if (is_parentheses(calculation[*index])) {

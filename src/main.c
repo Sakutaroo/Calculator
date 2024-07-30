@@ -1,10 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <utils.h>
-
-#include "expression_part.h"
-#include "operation.h"
-#include "expression.h"
 #include "list.h"
 #include "calculator.h"
 
