@@ -10,43 +10,47 @@ static void eval_factor(list_t **expression, expression_result_t **result)
         return;
     }
     if ((*expression)->next->expression_part->operation == NULL && (*expression)->next->expression_part->parentheses == NULL) {
-        delete_node_front(expression);
-        (*result)->remaining_expression = (*expression)->next;
         (*result)->value = (*expression)->next->expression_part->number;
+        delete_node_front(expression);
+        (*result)->remaining_expression = *expression;
     } else if ((*expression)->next->expression_part->operation && *(*expression)->next->expression_part->operation == ADD) {
         delete_node_front(expression);
         eval_factor(expression, result);
     } else if ((*expression)->next->expression_part->operation && *(*expression)->next->expression_part->operation == SUBTRACT) {
         delete_node_front(expression);
-        (*result)->remaining_expression = (*expression)->next;
-        (*result)->value = -(*expression)->next->expression_part->number;
+        eval_factor(expression, result);
+        (*result)->remaining_expression = *expression;
+        (*result)->value = -(*result)->value;
     } else if ((*expression)->next->expression_part->parentheses && *(*expression)->next->expression_part->parentheses == OPENING) {
         delete_node_front(expression);
-        eval_expression(expression);
+        (*result)->value = eval_expression(expression);
         delete_node_front(expression);
-        (*result)->remaining_expression = (*expression)->next;
-        (*result)->value = (*expression)->next->expression_part->number;
+        (*result)->remaining_expression = *expression;
     }
 }
 
 static void eval_term(list_t **expression, expression_result_t **result)
 {
-    eval_factor(expression, result);
-    list_t *remaining = (*result)->remaining_expression;
-    double sum = (*result)->value;
+    list_t *remaining = NULL;
+    double sum = 0.0;
 
+    eval_factor(expression, result);
+    remaining = (*result)->remaining_expression;
+    sum = (*result)->value;
     while (true) {
-        if ((*result)->remaining_expression->expression_part != NULL && *(*result)->remaining_expression->expression_part->operation == MULTIPLY) {
+        if ((*result)->remaining_expression->next->expression_part != NULL && (*result)->remaining_expression->next->expression_part->operation && *(*result)->remaining_expression->next->expression_part->operation == MULTIPLY) {
             delete_node_front(&remaining);
             eval_factor(&remaining, result);
             sum *= (*result)->value;
             remaining = (*result)->remaining_expression;
-        } else if ((*result)->remaining_expression->expression_part != NULL && *(*result)->remaining_expression->expression_part->operation == DIVIDE) {
+        } else if ((*result)->remaining_expression->next->expression_part != NULL && (*result)->remaining_expression->next->expression_part->operation && *(*result)->remaining_expression->next->expression_part->operation == DIVIDE) {
             delete_node_front(&remaining);
             eval_factor(&remaining, result);
             sum /= (*result)->value;
             remaining = (*result)->remaining_expression;
         } else {
+            (*result)->remaining_expression = remaining;
+            (*result)->value = sum;
             return;
         }
     }
@@ -72,17 +76,18 @@ static double eval_expression(list_t **expression)
     remaining = result->remaining_expression;
     sum = result->value;
     while (true) {
-        if (result->remaining_expression->expression_part != NULL && *result->remaining_expression->expression_part->operation == ADD) {
+        if (result->remaining_expression->next->expression_part != NULL && result->remaining_expression->next->expression_part->operation && *result->remaining_expression->next->expression_part->operation == ADD) {
             delete_node_front(&remaining);
             eval_term(&remaining, &result);
             sum += result->value;
             remaining = result->remaining_expression;
-        } else if (result->remaining_expression->expression_part != NULL && *result->remaining_expression->expression_part->operation == SUBTRACT) {
+        } else if (result->remaining_expression->next->expression_part != NULL && result->remaining_expression->next->expression_part->operation && *result->remaining_expression->next->expression_part->operation == SUBTRACT) {
             delete_node_front(&remaining);
             eval_term(&remaining, &result);
             sum -= result->value;
             remaining = result->remaining_expression;
         } else {
+            free(result);
             return sum;
         }
     }
@@ -94,3 +99,4 @@ double evaluate(list_t *expression)
         return 0.0;
     return eval_expression(&expression);
 }
+

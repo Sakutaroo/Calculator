@@ -10,10 +10,7 @@ int main(const int argc, char **argv)
     if (argc != 2 || argv == NULL || *argv == NULL || argv[1] == NULL)
         return 1;
     list = parse(argv[1]);
-    display_list(list);
-    printf("--------\n");
-    double result = evaluate(list);
-    printf("Result = %f", result);
+    printf("Result = %f", evaluate(list));
     delete_list(list);
     return 0;
 }
