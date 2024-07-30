@@ -1,5 +1,6 @@
 #ifndef OPERATION_H
     #define OPERATION_H
+    #include <stdbool.h>
 
 typedef enum operation_e {
     ERROR,
@@ -23,5 +24,6 @@ static const op_t op_map[] = {
 };
 
 operation_t operation_from_symbol(const char symbol);
+bool is_valid_symbol(const char symbol);
 
 #endif /* OPERATION_H */
