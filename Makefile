@@ -13,7 +13,7 @@ NAME	=	calculator
 
 OBJ	=	$(SRC:.c=.o)
 
-CFLAGS	=	-W -Wall -Wextra
+CFLAGS	=	-W -Wall -Wextra -O1
 
 CPPFLAGS	=	-I./include
 
